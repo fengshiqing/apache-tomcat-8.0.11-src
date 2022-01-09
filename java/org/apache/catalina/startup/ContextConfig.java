@@ -65,6 +65,7 @@ import org.apache.catalina.core.StandardContext;
 import org.apache.catalina.core.StandardHost;
 import org.apache.catalina.util.ContextName;
 import org.apache.catalina.util.Introspection;
+import org.apache.jasper.servlet.JasperInitializer;
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
 import org.apache.tomcat.JarScanType;
@@ -765,6 +766,11 @@ public class ContextConfig implements LifecycleListener {
         }
 
         webConfig();
+
+        // 源码没有这行代码，启动时报错“HTTP Status 500 - Unable to compile class for JSP”
+        // 原因是我们直接启动org.apache.catalina.startup.Bootstrap的时候没有加载org.apache.jasper.servlet.JasperInitializer，从而无法编译JSP。
+        // 解决办法是在tomcat的源码org.apache.catalina.startup.ContextConfig中手动将JSP解析器初始化。
+        context.addServletContainerInitializer(new JasperInitializer(), null);
 
         if (!context.getIgnoreAnnotations()) {
             applicationAnnotationsConfig();
