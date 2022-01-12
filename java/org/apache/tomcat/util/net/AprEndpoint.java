@@ -1210,7 +1210,7 @@ public class AprEndpoint extends AbstractEndpoint<Long> {
 
     // ------------------------------------------------------ Poller Inner Class
 
-   public class Poller implements Runnable {
+    public class Poller implements Runnable {
 
         /**
          * Pointers to the pollers.
@@ -2357,7 +2357,7 @@ public class AprEndpoint extends AbstractEndpoint<Long> {
 
         @Override
         public void run() {
-
+            // 多线程处理端口穿过来的流数据的。
             // Upgraded connections need to allow multiple threads to access the
             // connection at the same time to enable blocking IO to be used when
             // Servlet 3.1 NIO has been configured

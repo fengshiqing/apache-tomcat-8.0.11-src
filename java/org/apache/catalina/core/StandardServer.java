@@ -826,9 +826,7 @@ public final class StandardServer extends LifecycleMBeanBase implements Server {
                                         f.getName().endsWith(".jar")) {
                                     ExtensionValidator.addSystemResource(f);
                                 }
-                            } catch (URISyntaxException e) {
-                                // Ignore
-                            } catch (IOException e) {
+                            } catch (URISyntaxException | IOException e) {
                                 // Ignore
                             }
                         }
@@ -837,17 +835,17 @@ public final class StandardServer extends LifecycleMBeanBase implements Server {
                 cl = cl.getParent();
             }
         }
-        // Initialize our defined Services
-        for (int i = 0; i < services.length; i++) {
-            services[i].init();
+        // Initialize our defined Services   在server标签里可以有多个 service，遍历下来，全部进行初始化
+        for (Service service : services) {
+            service.init();
         }
     }
 
     @Override
     protected void destroyInternal() throws LifecycleException {
         // Destroy our defined Services
-        for (int i = 0; i < services.length; i++) {
-            services[i].destroy();
+        for (Service service : services) {
+            service.destroy();
         }
 
         globalNamingResources.destroy();

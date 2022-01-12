@@ -720,7 +720,7 @@ public abstract class AbstractEndpoint<S> {
      * prevent invalid state transitions.
      */
 
-    public abstract void bind() throws Exception;
+    public abstract void bind() throws Exception; // BIO、NIO、APR
     public abstract void unbind() throws Exception;
     public abstract void startInternal() throws Exception;
     public abstract void stopInternal() throws Exception;

@@ -545,12 +545,12 @@ public class StandardService extends LifecycleMBeanBase implements Service {
 
         super.initInternal();
 
-        if (container != null) {
+        if (container != null) { // 一个service标签里 只有一个 container，所以没有for循环
             container.init();
         }
 
         // Initialize any Executors
-        for (Executor executor : findExecutors()) {
+        for (Executor executor : findExecutors()) { // 一个service标签里 有多个 executor，所以有for循环
             if (executor instanceof JmxEnabled) {
                 ((JmxEnabled) executor).setDomain(getDomain());
             }
@@ -562,7 +562,7 @@ public class StandardService extends LifecycleMBeanBase implements Service {
 
         // Initialize our defined Connectors
         synchronized (connectorsLock) {
-            for (Connector connector : connectors) {
+            for (Connector connector : connectors) { // 一个service标签里 有多个 connectors，所以有for循环
                 try {
                     connector.init();
                 } catch (Exception e) {

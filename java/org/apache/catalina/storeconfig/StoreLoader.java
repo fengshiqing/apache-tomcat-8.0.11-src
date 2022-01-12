@@ -253,8 +253,7 @@ public class StoreLoader {
      * Get the value of the catalina.home environment variable.
      */
     private static String getCatalinaHome() {
-        return System.getProperty("catalina.home", System
-                .getProperty("user.dir"));
+        return System.getProperty("catalina.home", System.getProperty("user.dir"));
     }
 
     /**

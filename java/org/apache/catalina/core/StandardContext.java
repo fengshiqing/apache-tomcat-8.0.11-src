@@ -4892,6 +4892,7 @@ public class StandardContext extends ContainerBase
 
 
     /**
+     * 功能描述：启动时加载应用
      * Load and initialize all servlets marked "load on startup" in the
      * web application deployment descriptor.
      *
@@ -4913,7 +4914,7 @@ public class StandardContext extends ContainerBase
                 list = new ArrayList<>();
                 map.put(key, list);
             }
-            list.add(wrapper);
+            list.add(wrapper); // 加载 servlet
         }
 
         // Load the collected "load on startup" servlets

@@ -71,8 +71,7 @@ public class Catalina {
     /**
      * The string manager for this package.
      */
-    protected static final StringManager sm =
-        StringManager.getManager(Constants.Package);
+    protected static final StringManager sm = StringManager.getManager(Constants.Package);
 
 
     // ----------------------------------------------------- Instance Variables
@@ -91,8 +90,7 @@ public class Catalina {
     /**
      * The shared extensions class loader for this server.
      */
-    protected ClassLoader parentClassLoader =
-        Catalina.class.getClassLoader();
+    protected ClassLoader parentClassLoader = Catalina.class.getClassLoader();
 
 
     /**
@@ -209,7 +207,7 @@ public class Catalina {
      *
      * @param args Command line arguments to process
      */
-    protected boolean arguments(String args[]) {
+    protected boolean arguments(String[] args) {
 
         boolean isConfig = false;
 
@@ -246,7 +244,7 @@ public class Catalina {
 
 
     /**
-     * Return a File object representing our configuration file.
+     * Return a File object representing our configuration file.  读取 "conf/server.xml"文件
      */
     protected File configFile() {
 
@@ -472,10 +470,12 @@ public class Catalina {
 
 
     /**
+     * 功能描述：创建< server >标签级别的对象。
+     * Bootstrap启动时，通过反射会调用这个方法。
+     *
      * Start a new server instance.
      */
     public void load() {
-
         long t1 = System.nanoTime();
 
         initDirs();
@@ -490,7 +490,7 @@ public class Catalina {
         InputStream inputStream = null;
         File file = null;
         try {
-            file = configFile();
+            file = configFile(); // 1、读取 "conf/server.xml"文件
             inputStream = new FileInputStream(file);
             inputSource = new InputSource(file.toURI().toURL().toString());
         } catch (Exception e) {
@@ -500,15 +500,11 @@ public class Catalina {
         }
         if (inputStream == null) {
             try {
-                inputStream = getClass().getClassLoader()
-                    .getResourceAsStream(getConfigFile());
-                inputSource = new InputSource
-                    (getClass().getClassLoader()
-                     .getResource(getConfigFile()).toString());
+                inputStream = getClass().getClassLoader().getResourceAsStream(getConfigFile());
+                inputSource = new InputSource(getClass().getClassLoader().getResource(getConfigFile()).toString());
             } catch (Exception e) {
                 if (log.isDebugEnabled()) {
-                    log.debug(sm.getString("catalina.configFail",
-                            getConfigFile()), e);
+                    log.debug(sm.getString("catalina.configFail", getConfigFile()), e);
                 }
             }
         }
@@ -517,15 +513,11 @@ public class Catalina {
         // Alternative: don't bother with xml, just create it manually.
         if (inputStream == null) {
             try {
-                inputStream = getClass().getClassLoader()
-                        .getResourceAsStream("server-embed.xml");
-                inputSource = new InputSource
-                (getClass().getClassLoader()
-                        .getResource("server-embed.xml").toString());
+                inputStream = getClass().getClassLoader().getResourceAsStream("server-embed.xml");
+                inputSource = new InputSource(getClass().getClassLoader().getResource("server-embed.xml").toString());
             } catch (Exception e) {
                 if (log.isDebugEnabled()) {
-                    log.debug(sm.getString("catalina.configFail",
-                            "server-embed.xml"), e);
+                    log.debug(sm.getString("catalina.configFail", "server-embed.xml"), e);
                 }
             }
         }
@@ -533,11 +525,9 @@ public class Catalina {
 
         if (inputStream == null || inputSource == null) {
             if  (file == null) {
-                log.warn(sm.getString("catalina.configFail",
-                        getConfigFile() + "] or [server-embed.xml]"));
+                log.warn(sm.getString("catalina.configFail", getConfigFile() + "] or [server-embed.xml]"));
             } else {
-                log.warn(sm.getString("catalina.configFail",
-                        file.getAbsolutePath()));
+                log.warn(sm.getString("catalina.configFail", file.getAbsolutePath()));
                 if (file.exists() && !file.canRead()) {
                     log.warn("Permissions incorrect, read permission is not allowed on the file.");
                 }
@@ -548,10 +538,9 @@ public class Catalina {
         try {
             inputSource.setByteStream(inputStream);
             digester.push(this);
-            digester.parse(inputSource);
+            digester.parse(inputSource); // 2、解析 "conf/server.xml"文件
         } catch (SAXParseException spe) {
-            log.warn("Catalina.start using " + getConfigFile() + ": " +
-                    spe.getMessage());
+            log.warn("Catalina.start using " + getConfigFile() + ": " + spe.getMessage());
             return;
         } catch (Exception e) {
             log.warn("Catalina.start using " + getConfigFile() + ": " , e);
@@ -573,6 +562,7 @@ public class Catalina {
 
         // Start the new server
         try {
+            // 解析后，先创建< server >标签级别的对象
             getServer().init();
         } catch (LifecycleException e) {
             if (Boolean.getBoolean("org.apache.catalina.startup.EXIT_ON_INIT_FAILURE")) {
@@ -592,8 +582,7 @@ public class Catalina {
     /*
      * Load using arguments
      */
-    public void load(String args[]) {
-
+    public void load(String[] args) {
         try {
             if (arguments(args)) {
                 load();
@@ -614,7 +603,7 @@ public class Catalina {
         }
 
         if (getServer() == null) {
-            log.fatal("Cannot start server. Server instance is not configured.");
+            log.error("【Cannot start server. Server instance is not configured.】");
             return;
         }
 

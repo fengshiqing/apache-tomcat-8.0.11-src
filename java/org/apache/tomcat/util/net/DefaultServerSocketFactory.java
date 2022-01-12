@@ -52,6 +52,7 @@ public class DefaultServerSocketFactory implements ServerSocketFactory {
     @Override
     public ServerSocket createSocket (int port, int backlog,
             InetAddress ifAddress) throws IOException {
+        // 监听端口号：java io or NIO
         return new ServerSocket (port, backlog, ifAddress);
     }
 

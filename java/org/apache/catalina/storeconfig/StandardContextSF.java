@@ -333,8 +333,7 @@ public class StandardContextSF extends StoreFactoryBase {
      * TODO Filename case handling for Windows?
      * TODO digester variable subsitution $catalina.base, $catalina.home
      */
-    protected String[] filterWatchedResources(StandardContext context,
-            String[] wresources) throws Exception {
+    protected String[] filterWatchedResources(StandardContext context, String[] wresources) throws Exception {
         File configBase = configBase(context);
         String confContext = new File(System.getProperty("catalina.base"),
                 "conf/context.xml").getCanonicalPath();

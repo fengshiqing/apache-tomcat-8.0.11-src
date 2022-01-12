@@ -190,11 +190,9 @@ public class Tomcat {
      * {@link javax.servlet.ServletContainerInitializer} processing will be
      * applied.
      *
-     * @throws ServletException
+     * @throws ServletException 异常
      */
-    public Context addWebapp(String contextPath, String baseDir)
-            throws ServletException {
-
+    public Context addWebapp(String contextPath, String baseDir) throws ServletException {
         return addWebapp(getHost(), contextPath, baseDir);
     }
 
@@ -614,8 +612,7 @@ public class Tomcat {
         }
         if (basedir == null) {
             // Create a temp dir.
-            basedir = System.getProperty("user.dir") +
-                "/tomcat." + port;
+            basedir = System.getProperty("user.dir") + "/tomcat." + port;
         }
 
         File baseFile = new File(basedir);
@@ -641,8 +638,7 @@ public class Tomcat {
             }
             server.setCatalinaHome(homeFile);
         }
-        System.setProperty(Globals.CATALINA_HOME_PROP,
-                server.getCatalinaHome().getPath());
+        System.setProperty(Globals.CATALINA_HOME_PROP, server.getCatalinaHome().getPath());
     }
 
     static final String[] silences = new String[] {

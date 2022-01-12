@@ -46,20 +46,21 @@ public class CatalinaProperties {
      * Return specified property value.
      */
     public static String getProperty(String name) {
+        log.info("【从catalina.properties中获取属性：】" + name);
         return properties.getProperty(name);
     }
 
 
     /**
      * Load properties.
+     * 将 conf/catalina.properties 中的非空的配置项，全部放入到 系统属性中
      */
     private static void loadProperties() {
-
         InputStream is = null;
         Throwable error = null;
 
         try {
-            String configUrl = getConfigUrl();
+            String configUrl = getConfigUrl(); // 默认情况下 configUrl 为null
             if (configUrl != null) {
                 is = (new URL(configUrl)).openStream();
             }
@@ -80,8 +81,7 @@ public class CatalinaProperties {
 
         if (is == null) {
             try {
-                is = CatalinaProperties.class.getResourceAsStream
-                    ("/org/apache/catalina/startup/catalina.properties");
+                is = CatalinaProperties.class.getResourceAsStream("/org/apache/catalina/startup/catalina.properties");
             } catch (Throwable t) {
                 handleThrowable(t);
             }
@@ -90,7 +90,7 @@ public class CatalinaProperties {
         if (is != null) {
             try {
                 properties = new Properties();
-                properties.load(is);
+                properties.load(is); // 读取 conf/catalina.properties 配置项
                 is.close();
             } catch (Throwable t) {
                 handleThrowable(t);
@@ -111,7 +111,9 @@ public class CatalinaProperties {
             String name = (String) enumeration.nextElement();
             String value = properties.getProperty(name);
             if (value != null) {
-                System.setProperty(name, value);
+                log.info("【将catalina.properties中属性放入到系统变量中，name：】" + name);
+                log.info("【将catalina.properties中属性放入到系统变量中，value：】" + value);
+                System.setProperty(name, value); // 将 conf/catalina.properties 中的非空的配置项，全部放入到 系统属性中
             }
         }
     }

@@ -127,8 +127,7 @@ import org.apache.tomcat.util.res.StringManager;
  *
  * @author Craig R. McClanahan
  */
-public abstract class ContainerBase extends LifecycleMBeanBase
-        implements Container {
+public abstract class ContainerBase extends LifecycleMBeanBase implements Container {
 
     private static final org.apache.juli.logging.Log log=
         org.apache.juli.logging.LogFactory.getLog( ContainerBase.class );

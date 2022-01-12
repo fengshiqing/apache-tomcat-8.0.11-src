@@ -560,7 +560,7 @@ public class Connector extends LifecycleMBeanBase  {
      * @param protocol The Coyote protocol name
      */
     public void setProtocol(String protocol) {
-
+        // 配置 APR、BIO、NIO
         if (AprLifecycleListener.isAprAvailable()) {
             if ("HTTP/1.1".equals(protocol)) {
                 setProtocolHandlerClassName

@@ -87,8 +87,7 @@ public final class Tool {
     /**
      * The pathname of our installation base directory.
      */
-    private static final String catalinaHome =
-            System.getProperty(Globals.CATALINA_HOME_PROP);
+    private static final String catalinaHome = System.getProperty(Globals.CATALINA_HOME_PROP);
 
 
     /**

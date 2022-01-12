@@ -70,9 +70,7 @@ public final class ClassLoaderFactory {
      *
      * @exception Exception if an error occurs constructing the class loader
      */
-    public static ClassLoader createClassLoader(File unpacked[],
-                                                File packed[],
-                                                final ClassLoader parent)
+    public static ClassLoader createClassLoader(File unpacked[], File packed[], final ClassLoader parent)
         throws Exception {
 
         if (log.isDebugEnabled())
@@ -143,12 +141,8 @@ public final class ClassLoaderFactory {
      *
      * @exception Exception if an error occurs constructing the class loader
      */
-    public static ClassLoader createClassLoader(List<Repository> repositories,
-                                                final ClassLoader parent)
-        throws Exception {
-
-        if (log.isDebugEnabled())
-            log.debug("Creating new class loader");
+    public static ClassLoader createClassLoader(List<Repository> repositories, final ClassLoader parent) throws Exception {
+        log.info("【Creating new class loader】");
 
         // Construct the "class path" for this class loader
         Set<URL> set = new LinkedHashSet<>();
@@ -187,8 +181,7 @@ public final class ClassLoaderFactory {
                         continue;
                     }
                     if (log.isDebugEnabled())
-                        log.debug("  Including directory glob "
-                            + directory.getAbsolutePath());
+                        log.debug("  Including directory glob " + directory.getAbsolutePath());
                     String filenames[] = directory.list();
                     for (int j = 0; j < filenames.length; j++) {
                         String filename = filenames[j].toLowerCase(Locale.ENGLISH);
@@ -200,8 +193,7 @@ public final class ClassLoaderFactory {
                             continue;
                         }
                         if (log.isDebugEnabled())
-                            log.debug("    Including glob jar file "
-                                + file.getAbsolutePath());
+                            log.debug("    Including glob jar file " + file.getAbsolutePath());
                         URL url = file.toURI().toURL();
                         set.add(url);
                     }
@@ -246,9 +238,7 @@ public final class ClassLoaderFactory {
                 // Existence of ${catalina.base}/lib directory is optional.
                 // Hide the warning if Tomcat runs with separate catalina.home
                 // and catalina.base and that directory is absent.
-                if (!home.getPath().equals(base.getPath())
-                        && file.getPath().equals(defaultValue.getPath())
-                        && !file.exists()) {
+                if (!home.getPath().equals(base.getPath()) && file.getPath().equals(defaultValue.getPath()) && !file.exists()) {
                     log.debug(msg);
                 } else {
                     log.warn(msg);

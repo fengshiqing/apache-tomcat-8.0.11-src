@@ -135,22 +135,14 @@ public class Constants {
         (System.getSecurityManager() != null);
 
     public static final boolean USE_INSTANCE_MANAGER_FOR_TAGS =
-        Boolean.valueOf(System.getProperty("org.apache.jasper.Constants.USE_INSTANCE_MANAGER_FOR_TAGS", "false")).booleanValue();
+            Boolean.parseBoolean(System.getProperty("org.apache.jasper.Constants.USE_INSTANCE_MANAGER_FOR_TAGS", "false"));
 
     /**
      * The name of the path parameter used to pass the session identifier
      * back and forth with the client.
      */
     public static final String SESSION_PARAMETER_NAME =
-        System.getProperty("org.apache.catalina.SESSION_PARAMETER_NAME",
-                "jsessionid");
-
-    /**
-     * Name of the system property containing
-     * the tomcat product installation path
-     */
-    public static final String CATALINA_HOME_PROP = "catalina.home";
-
+        System.getProperty("org.apache.catalina.SESSION_PARAMETER_NAME", "jsessionid");
 
     /**
      * Name of the ServletContext init-param that determines if the XML parsers

@@ -99,7 +99,7 @@ public abstract class LifecycleBase implements Lifecycle {
         setStateInternal(LifecycleState.INITIALIZING, null, false);
 
         try {
-            initInternal();
+            initInternal(); // 初始化内部组件
         } catch (Throwable t) {
             ExceptionUtils.handleThrowable(t);
             setStateInternal(LifecycleState.FAILED, null, false);
